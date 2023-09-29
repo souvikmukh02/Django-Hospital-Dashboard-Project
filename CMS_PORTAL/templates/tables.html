@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% block content %}
+<div id="content">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">        
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                {% if employees %}
+                <h6 class="m-0 font-weight-bold text-primary">List of Employees</h6>
+                {% elif products %}
+                <h6 class="m-0 font-weight-bold text-primary">List of Products</h6>
+                {% elif deals %}
+                <h6 class="m-0 font-weight-bold text-primary">List of Deals of Products</h6>
+                {% elif deals_month %}
+                <h6 class="m-0 font-weight-bold text-primary">List of Deals of Months</h6>
+                {% elif doctors %}
+                <h6 class="m-0 font-weight-bold text-primary">List of Doctors</h6>
+                {% elif appointment %}
+                <h6 class="m-0 font-weight-bold text-primary">List of Doctor's Appointment</h6>
+                {% elif visit %}
+                <h6 class="m-0 font-weight-bold text-primary">List of Doctor's Visit Details</h6>
+                {% else %}
+                <h6 class="m-0 font-weight-bold text-primary">Lists</h6>
+                {% endif %}
+            </div>
+            {% if employees or products or doctors or deals or deals_month or appointment or visit or administration or emp or emp_data %}
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                        <div class="row">
+                            {% if user.is_superuser %}
+                                {% if employees %}
+                                <div class="col-sm-12 col-md-0">
+                                    <a href="{% url 'register' %}"><label style="cursor: pointer">Add Employees</label></a><br />                            
+                                </div>
+                                {% endif %}
+                            {% else %}
+                                {% if products %}
+                                    <div class="col-sm-12 col-md-3">
+                                        <a href="{% url 'add_product_details' %}"><label style="cursor: pointer">Add Products</label></a><br />                            
+                                    </div>
+                                {% elif doctors %}
+                                    <div class="col-sm-12 col-md-3">
+                                        <a href="{% url 'add_doctors' %}"><label style="cursor: pointer">Add Doctors</label></a><br />                            
+                                    </div>                            
+                                {% elif deals %}
+                                    <div class="col-sm-12 col-md-3">
+                                        <a href="{% url 'deals_details' %}"><label style="cursor: pointer">Add Deals</label></a><br />                            
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                            <div class="col-sm-12 col-md-4">
+                                <div class="dataTables_length" id="dataTable_length">                                    
+                                    <label>Show <select name="dataTable_length" aria-controls="dataTable" class="custom-select custom-select-sm form-control form-control-sm">
+                                        <option value="10">5</option>
+                                        <option value="25">10</option>
+                                        <option value="50">15</option>
+                                        <option value="100">20</option>
+                                        <option value="100">50</option>
+                                    </select></label>                                    
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-5">
+                                <div id="dataTable_filter" class="dataTables_filter">
+                                    <label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                    {% if products %}
+                                    <thead>                                                                                
+                                        <tr role="row">
+                                            <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Serial No: activate to sort column descending" style="width: 57.1803px;">S No.</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Product Name: activate to sort column ascending" style="width: 61.1803px;">Product Name</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Company Name: activate to sort column ascending" style="width: 49.1803px;">Company Name</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Product Image: activate to sort column ascending" style="width: 30.1803px;">Product Image</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Product Price: activate to sort column ascending" style="width: 68.1803px;">Product Price</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Employee Name: activate to sort column ascending" style="width: 66.1803px;">Entered By</th>
+                                        </tr>
+                                    {% elif deals or deals_month %}
+                                        <col>
+                                        <colgroup span="3"></colgroup> 
+                                        <tr>
+                                            <th scope="col" class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Sr. No.: activate to sort column descending" >S No.</th>                                     
+                                            <th colspan="3" scope="colgroup" class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Total Deals Done: activate to sort column ascending" >Total Deals Done</th>
+                                            <th scope="col" class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Employee Name: activate to sort column ascending">Employee Name</th>                                            
+                                        </tr>                                       
+                                        <tr>  
+                                            <th rowspan="1">---</th>                                                                                             
+                                            <th scope="col" class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Doctor: activate to sort column ascending" >Doctor</th>
+                                            <th scope="col" class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Product: activate to sort column ascending" >Product</th>
+                                            <th scope="col" class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Quantity: activate to sort column ascending" >Quantity</th>                                                                                        
+                                            <th rowspan="1">---</th>                                                                                             
+                                        </tr>
+                                    {% elif doctors %}
+                                        <tr role="row">                                                                                                                                
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Doctor Name: activate to sort column ascending" style="width: 61.1803px;">Doctor's Name</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Contact: activate to sort column ascending" style="width: 57.1803px;">Contact</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Location: activate to sort column ascending" style="width: 56.1803px;">location</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Specialisation: activate to sort column ascending" style="width: 80.1803px;">Specialization</th>                                            
+                                        </tr>
+                                    {% elif appointment %}
+                                        <tr role="row">                                                                                
+                                            <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Serial No: activate to sort column descending" style="width: 57.1803px;">S No.</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Doctor Name: activate to sort column ascending" style="width: 61.1803px;">Doctor's Name</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 57.1803px;">Date of Appointment</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Time: activate to sort column ascending" style="width: 56.1803px;">Time of Appointment</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Employee Name: activate to sort column ascending" style="width: 80.1803px;">Entered By</th>                                            
+                                        </tr>
+                                    {% elif visit %}
+                                        <col>
+                                        <colgroup span="3"></colgroup> 
+                                        <tr>
+                                            <th scope="col" class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Sr. No.: activate to sort column descending" >S No.</th>                                     
+                                            <th colspan="3" scope="colgroup" class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Total Deals Done: activate to sort column ascending" >Total Appointments Done</th>
+                                            <th scope="col" class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Employee Name: activate to sort column ascending">Employee Name</th>                                            
+                                        </tr>                                       
+                                        <tr>  
+                                            <th rowspan="1">---</th>                                                                                             
+                                            <th scope="col" class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Doctor: activate to sort column ascending" >Doctor</th>
+                                            <th scope="col" class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" >Date</th>
+                                            <th scope="col" class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Time: activate to sort column ascending" >Time</th>                                                                                        
+                                            <th rowspan="1">---</th>                                                                                             
+                                        </tr>
+                                    {% elif administration %}
+                                        <tr role="row">
+                                            <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="First Name: activate to sort column descending" style="width: 57.1803px;">First Name</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Last Name: activate to sort column ascending" style="width: 61.1803px;">Last Name</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 49.1803px;">Email</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Password: activate to sort column ascending" style="width: 30.1803px;">Password</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 66.1803px;">Staff SuperUser Status</th>
+                                        </tr>
+                                    {% elif emp %}
+                                        <tr role="row">
+                                            <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="First Name: activate to sort column descending" style="width: 57.1803px;">First Name</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Last Name: activate to sort column ascending" style="width: 61.1803px;">Last Name</th>                                            
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 66.1803px;">Staff SuperUser Status</th>
+                                        </tr>
+                                    {% else %}
+                                        <tr role="row">
+                                            <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="First Name: activate to sort column descending" style="width: 57.1803px;">First Name</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Last Name: activate to sort column ascending" style="width: 61.1803px;">Last Name</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 49.1803px;">Email</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Password: activate to sort column ascending" style="width: 30.1803px;">Password</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Date of Joining: activate to sort column ascending" style="width: 68.1803px;">Date of Joining</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Loggedin Status: activate to sort column ascending" style="width: 66.1803px;">Loggedin Status</th>
+                                        </tr>
+                                    {% endif %}
+                                    </thead>                                    
+                                    <tbody>                                        
+                                        {% if products %}
+                                            <style type="text/css">
+                                                table
+                                                {
+                                                    counter-reset: Serial;          
+                                                }
+                                        
+                                                tr td:first-child::before
+                                                {
+                                                counter-increment: Serial;      
+                                                content: counter(Serial); 
+                                                }
+                                            </style>                                             
+                                            {% for items in products %}
+                                            <tr class="odd">                                                   
+                                                <td class="sorting_1"></td>
+                                                <td>{{ items.product_name }}</td>
+                                                <td>{{ items.company_name }}</td>
+                                                <td><img src="{{ items.product_image.url }}" width="90" height="90" /></td>
+                                                <td>{{ items.product_price }}</td>
+                                                {% if s_emp_name %}
+                                                    <td>{{ s_emp_name.first_name }} {{ s_emp_name.last_name }}</td>
+                                                {% else %}  
+                                                    <td>                                                    
+                                                    {% if employee_name %} 
+                                                        {{ employee_name }}
+                                                    {% else %}                                                    
+                                                        {% for emp in employees_product %}
+                                                            {% if items.user_id == emp.user_id %}
+                                                                {{ emp.first_name }} {{ emp.last_name }} 
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                    </td>
+                                                {% endif %}                                                
+                                            </tr>
+                                            {% endfor %}  
+                                        {% elif administration %} 
+                                            <tr class="odd">
+                                                <td>{{ administration.first_name }}</td>
+                                                <td>{{ administration.last_name }}</td>
+                                                <td>{{ administration.email }}</td>
+                                                <td>Encrypted</td> 
+                                                {% if administration.is_superuser == 1 %}                                               
+                                                <td>True</td>
+                                                {% elif administration.is_superuser == 0 %}                                               
+                                                <td>False</td>
+                                                {% endif %}
+                                            </tr>                                           
+                                        {% elif emp %} 
+                                            <tr class="odd">
+                                                <td>{{ emp.first_name }}</td>
+                                                <td>{{ emp.last_name }}</td>                                                
+                                                {% if emp.is_superuser == 1 %}                                               
+                                                <td>True</td>
+                                                {% elif emp.is_superuser == 0 %}
+                                                <td>False</td>
+                                                {% endif %}
+                                            </tr>                                           
+                                        {% elif employees %} 
+                                            {% for item in employees %}
+                                            <tr class="odd">
+                                                <td>{{ item.first_name }}</td>
+                                                <td>{{ item.last_name }}</td>
+                                                <td>{{ item.email }}</td>
+                                                <td>{{ item.password }}</td>                                                
+                                                <td>{{ item.doj }}</td>
+                                                <td>{{ item.status }}</td>
+                                            </tr>    
+                                            {% endfor %}                                        
+                                        {% elif emp_data %} 
+                                            <tr class="odd">
+                                                <td>{{ emp_data.first_name }}</td>
+                                                <td>{{ emp_data.last_name }}</td>
+                                                <td>{{ emp_data.email }}</td>
+                                                <td>{{ emp_data.password }}</td>                                                
+                                                <td>{{ emp_data.doj }}</td>
+                                                <td>{{ emp_data.status }}</td>
+                                            </tr>                                        
+                                        {% elif deals_month %} 
+                                            <style type="text/css">
+                                                table
+                                                {
+                                                    counter-reset: Serial;          
+                                                }
+                                        
+                                                tr td:first-child::before
+                                                {
+                                                counter-increment: Serial;      
+                                                content: counter(Serial); 
+                                                }
+                                            </style>
+                                            {% for row in deals_month %}   
+                                                <tr class="odd">           
+                                                    <td class="sorting_1"></td>
+                                                    {% for field in row %}
+                                                        <td>
+                                                            {% for item in field %}  
+                                                                {{ item }} {{ item.first_name }}&nbsp;{{ item.last_name }}
+                                                            {% endfor %}      
+                                                        </td>                                                      
+                                                    {% endfor %}
+                                                </tr>
+                                            {% endfor %}                                        
+                                        {% elif deals %} 
+                                            <style type="text/css">
+                                                table
+                                                {
+                                                    counter-reset: Serial;          
+                                                }
+                                        
+                                                tr td:first-child::before
+                                                {
+                                                counter-increment: Serial;      
+                                                content: counter(Serial); 
+                                                }
+                                            </style>
+                                            {% for item in deals %}                                            
+                                            <tr class="odd">                                                
+                                                <td class="sorting_1"></td>                                                
+                                                <td>                                                  
+                                                    {{ item.doctor.name }} &nbsp;                                                    
+                                                </td>
+                                                <td>                                                    
+                                                    {{ item.product.product_name }} &nbsp;                                                    
+                                                </td>
+                                                <td>{{ item.quantity }}</td>                                                
+                                                </td>
+                                                <td>                                                
+                                                    {{ employee_name }}
+                                                </td>
+                                            </tr>    
+                                            {% endfor %}                                        
+                                        {% elif doctors %} 
+                                            {% for item in doctors %}
+                                            <tr class="odd">
+                                                <td>{{ item.name }}</td>                                                
+                                                <td>{{ item.contact }}</td>
+                                                <td>{{ item.location }}</td>                                                
+                                                <td>{{ item.specialisation }}</td>
+                                            </tr>    
+                                            {% endfor %}
+                                        {% elif appointment %} 
+                                        <style type="text/css">
+                                            table
+                                            {
+                                                counter-reset: Serial;          
+                                            }
+                                    
+                                            tr td:first-child::before
+                                            {
+                                            counter-increment: Serial;      
+                                            content: counter(Serial); 
+                                            }
+                                        </style>
+                                            {% for item in appointment %}
+                                                <tr class="odd">
+                                                    <td class="sorting_1"></td>
+                                                    {% for field in item %}                                                                                                       
+                                                    <td>{{ field }}</td>
+                                                    {% endfor %}
+                                                </tr>    
+                                            {% endfor %}                                        
+                                        {% elif visit %} 
+                                            <style type="text/css">
+                                                table
+                                                {
+                                                    counter-reset: Serial;          
+                                                }
+                                        
+                                                tr td:first-child::before
+                                                {
+                                                counter-increment: Serial;      
+                                                content: counter(Serial); 
+                                                }
+                                            </style>
+                                                {% for item in visit %}
+                                                    <tr class="odd">
+                                                        <td class="sorting_1"></td>
+                                                        {% for field in item %}                                                                                                       
+                                                        <td>{{ field }}</td>
+                                                        {% endfor %}
+                                                    </tr>    
+                                                {% endfor %}                                        
+                                        {% else %}
+                                            <h6>No Records Found.</h6>
+                                        {% endif %}                           
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+            {% else %}                                                           
+                <h6 style="margin-left: 20px;">Currently no record in the database</h6>
+            {% endif %}
+        </div>
+    </div>
+</div>
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+
+    <!-- Page level plugins -->
+    <script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="{% static 'js/demo/datatables-demo.js' %}"></script>
+<!--
+</body>
+-->
+{% endblock %}
+</html>

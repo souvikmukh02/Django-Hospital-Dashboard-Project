@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% include 'base/header.html' %}
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        {% include 'base/sidebar.html' %}
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                {% include 'base/topbar.html' %}
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    {% if user.is_superuser %}
+                        <!-- Page Heading -->
+                        <h1 class="h3 mb-4 text-gray-800">Admin</h1>
+                        <br />
+                    {% else %}
+                        <!-- Page Heading -->
+                        <h1 class="h3 mb-4 text-gray-800">Employee</h1>
+                        <br />
+                    {% endif %}
+
+                    <div class="row">
+
+                        <div class="col-lg-12">
+
+                            <!-- Employee Section 1 -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">My Profile</h6>
+                                </div>
+                                
+                                <!-- Page Heading -->
+                                {% if user.is_superuser %}
+                                    <h1 id="form_edit_2" class="h3 mb-2 text-gray-800" style="margin-left: 25px;">Admin</h1>
+                                    <p class="mb-4" style="margin-left: 50px;">
+                                            <a target="_blank" href="#">Admin Module</a>
+                                    </p>
+                                {% else %}
+                                    <h1 id="form_edit_2" class="h3 mb-2 text-gray-800" style="margin-left: 25px;">Admin</h1>
+                                    <p class="mb-4" style="margin-left: 50px;">
+                                            <a target="_blank" href="#">Employee Module</a>
+                                    </p>
+                                {% endif %}                                
+
+                                <div class="card-body">
+                                    {% include 'tables.html' %}                                     
+                                </div>
+                            </div>
+                        </div>
+                        {% if administration or emp %}
+                        <div class="col-lg-12">
+                            <!-- Employee Edit -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 id="form_edit_1" class="m-0 font-weight-bold text-primary">Edit</h6>
+                                </div>
+                                <div class="card-body">
+                                    <p>
+                                        My Role in the hospital can be edited below in the following form 
+                                    </p>
+                                    <p>
+                                        <h4 style="color: chocolate;">Edit My Profile</h4>
+                                    </p>                                                                             
+                                    <form name="form" method="POST" action="{% url 'my_profile' %}" style="padding-left: 5px;font-size: 18px;background-color:gainsboro;color: brown;"> {% csrf_token %} 
+                                            <br />                                            
+                                            <p hidden>                                                
+                                                <input type="text" style="width: 220px;" name="id" value="{{ emp.id }}{{ administration.id }}">
+                                            </p>
+                                            <p style="display: inline-block;">                                            
+                                                <label style="width: 130px;">First Name:&nbsp;</label>
+                                                <input type="text" style="width: 220px;" name="first_name" id="first_name" value="{{ emp.first_name }}{{ administration.first_name }}" placeholder="{{ emp.first_name }}{{ administration.first_name }}">
+                                            </p>
+                                            <p>
+                                                <label style="width: 130px;">Last Name:&nbsp;</label>
+                                                <input type="text" style="width: 220px;" name="last_name" id="last_name" value="{{ emp.last_name }}{{ administration.last_name }}" placeholder="{{ emp.last_name }}{{ administration.last_name }}">
+                                            </p>
+                                            <p style="display: inline-block;">
+                                                <label style="width: 130px;">Email:&nbsp;</label>
+                                                <input type="text" style="width: 220px;" name="email" id="email" value="{{ emp.email }}{{ administration.email }}" placeholder="{{ emp.email }}{{ administration.email }}">
+                                            </p>
+                                            {% if is_superuser == 0 %}                                            
+                                            <p>
+                                                <label style="width: 130px;">Password:&nbsp;</label>
+                                                <input type="text" style="width: 220px;" name="password" id="password" value="{{ emp.password }}{{ administration.password }}" placeholder="{{ emp.password }}{{ administration.password }}">
+                                            </p>
+                                            <p>
+                                                <label style="width: 130px;">Date of Joining:&nbsp;</label>
+                                                <input type="text" disabled style="width: 220px;" name="doj" id="doj" value="{{ emp.doj }}" placeholder="{{ emp.doj }}">
+                                            </p>      
+                                            {% endif %}                                      
+                                            <p>                                            
+                                                <input type="submit" style="width: 100px;background-color:thistle;border-radius: 5px;border-color: gainsboro;text-align: center;margin-left: 130px;" name="submit" id="submit1" value="Edit">
+                                            </p>
+                                    </form>                                    
+                                </div>
+                            </div>
+                        </div>                
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+            {% include 'base/footer.html' %}
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+        
+    <!-- Logout Modal-->
+    {% include 'base/footer-logout.html' %}
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+
+</body>
+
+</html>

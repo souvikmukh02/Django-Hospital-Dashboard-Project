@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% include 'base/header.html' %}
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        {% include 'base/sidebar_emp.html' %}
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                {% include 'base/topbar.html' %}
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-4 text-gray-800">View Products</h1>                    
+                    <div class="row">
+
+                        <div class="col-lg-12">
+
+                            <!-- Product Section 1 -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">List of Products</h6>
+                                </div>
+                                <br />
+                                <!-- Page Heading -->
+                                <h1 class="h3 mb-2 text-gray-800" style="margin-left: 25px;">Products Subscribed</h1>
+                                <p class="mb-4" style="margin-left: 50px;">Product lists are given below which includes their product name, company name, image,
+                                    price, subscribed by you. <br />
+                                    This page also contains add product options.<br />
+                                    <a target="_blank" href="#">Employee Account Profile Link</a>
+                                </p>
+
+                                <div class="card-body">
+                                    {% include 'tables.html' %}                                     
+                                </div>
+                            </div>
+                        </div>                                                
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+            {% include 'base/footer.html' %}
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    {% include 'base/footer-logout.html' %}
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+
+</body>
+
+</html>

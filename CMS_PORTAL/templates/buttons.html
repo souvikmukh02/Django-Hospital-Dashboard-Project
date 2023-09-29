@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% include 'base/header.html' %}
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        {% include 'base/sidebar.html' %}
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                {% include 'base/topbar.html' %}
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-4 text-gray-800">Employee</h1>
+                    <a href="#form_edit">Edit Column Below</a>
+                    <br />
+                    <div class="row">
+
+                        <div class="col-lg-12">
+
+                            <!-- Employee Section 1 -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">List of Employees</h6>
+                                </div>
+                                
+                                <!-- Page Heading -->
+                                <h1 id="form_edit_2" class="h3 mb-2 text-gray-800" style="margin-left: 25px;">Employees</h1>
+                                <p class="mb-4" style="margin-left: 50px;">Employees lists are given below which includes their first name, last name, email,
+                                    password, date of joining and status. <br />
+                                    This page also contains create and edit options of employees.<br />
+                                    <a target="_blank" href="#">Employee Module</a>
+                                </p>
+
+                                <div class="card-body">
+                                    {% include 'tables.html' %}                                     
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <!-- Employee Edit -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 id="form_edit" class="m-0 font-weight-bold text-primary">Edit Employee</h6>
+                                </div>
+                                <div class="card-body">
+                                    <p>
+                                        Employees of the hospital listed above can be edited below in the following form 
+                                    </p>
+                                    <p>
+                                        <h4 style="color: chocolate;">Edit Employee</h4>
+                                    </p>            
+                                    {% if employees %}              
+                                    <form method="POST" action="{% url 'dropdown' pk='edit' %}#form_edit">{% csrf_token %}
+                                    <p class="m-0 font-weight-bold text-primary">Drop Down List: &nbsp;                                                                                                                                                                                                                                                        
+                                        <select name="selector" id="selector" style="font-weight: bold; font-size: 18px; color: brown; width: 250px;">
+                                            {% for obj in employees %}                                                                                                                                                                               
+                                            <option value="{{ obj.id }}">
+                                                Name: {{obj.first_name}} :: Email: {{ obj.email }}                                                                                          
+                                            </option>
+                                            {% endfor %}
+                                        </select>  
+                                        <input type="submit" name="submit" value="Get">
+                                    </p>                      
+                                    </form>
+                                    <br />
+                                    {% endif %}
+                                    <form name="form" method="POST" action="{% url 'edit_employee' %}" style="padding-left: 5px;font-size: 18px;background-color:gainsboro;color: brown;"> {% csrf_token %} 
+                                            <br />                                            
+                                            <p hidden>                                                
+                                                <input type="text" style="width: 220px;" name="empid" value="{{ emp_edit.id }}">
+                                            </p>
+                                            <p style="display: inline-block;">                                            
+                                                <label style="width: 130px;">First Name:&nbsp;</label>
+                                                <input type="text" style="width: 220px; border-color: gainsboro; border-radius: 5px;" name="first_name" id="first_name" value="{{ emp_edit.first_name }}" placeholder="{{ emp_edit.first_name }}">
+                                            </p>
+                                            <p>
+                                                <label style="width: 130px;">Last Name:&nbsp;</label>
+                                                <input type="text" style="width: 220px; border-color: gainsboro; border-radius: 5px;" name="last_name" id="last_name" value="{{ emp_edit.last_name }}" placeholder="{{ emp_edit.last_name }}">
+                                            </p>
+                                            <p style="display: inline-block;">
+                                                <label style="width: 130px;">Email:&nbsp;</label>
+                                                <input type="text" style="width: 220px; border-color: gainsboro; border-radius: 5px;" name="email" id="email" value="{{ emp_edit.email }}" placeholder="{{ emp_edit.email }}">
+                                            </p>                                                                                        
+                                            <p>
+                                                <label style="width: 130px;">Date of Joining:&nbsp;</label>
+                                                <input type="text" disabled style="width: 220px;  border-color: gainsboro; border-radius: 5px;" name="doj" id="doj" value="{{ emp_edit.doj }}" placeholder="{{ emp_edit.doj }}">
+                                            </p>                                            
+                                            <p>                                            
+                                                <input type="submit" style="width: 100px;background-color:thistle;border-radius: 5px;border-color: gainsboro;text-align: center;margin-left: 130px;" name="submit" id="submit1" value="Edit">
+                                                <input type="submit" style="width: 100px;background-color:thistle;border-radius: 5px;border-color: gainsboro;text-align: center;margin-left: 0px;" name="submit2" id="submit2" value="Refresh">
+                                            </p>
+                                    </form>              
+                                </div>
+                            </div>
+                        </div>                
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+            {% include 'base/footer.html' %}
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+        
+    <!-- Logout Modal-->
+    {% include 'base/footer-logout.html' %}
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+
+</body>
+
+</html>

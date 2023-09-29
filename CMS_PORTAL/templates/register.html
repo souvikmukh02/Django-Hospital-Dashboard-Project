@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+{% include 'base/header.html' %}
+
+<body class="bg-gradient-primary">
+
+    <div class="container">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Create an Employee Account!</h1>
+                            </div>
+                            {% block content %}
+                            <form class="user" method="POST" action="register">{% csrf_token %}
+                                <div class="form-group row">
+                                    <div class="col-md-12">
+                                        {% if forms.errors %}
+                                            {% for field in form %}
+                                                {% for error in field.error %}
+                                                    <div class="alert alert-danger">
+                                                        <strong>{{error|escape}}</strong>
+                                                    </div>
+                                                {% endfor %}
+                                            {% endfor %}
+                                            {% for error in form.non_field_errors %}
+                                                <div class="alert alert-danger">
+                                                    <strong>{{ error|escape }}</strong>
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>    
+                                </div>                                                        
+                                
+                                <div class="form-group">
+                                    <label style="color:brown">Username: &nbsp;</label>{{ form.username }}
+                                </div>  
+                                {% if form.username.errors %}
+                                    {% for error in username.errors %}
+                                        <div class="alert alert-danger">
+                                            <strong>{{error|escape}}</strong>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+               
+                                <div class="form-group row">              
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label style="color:brown">First Name: &nbsp;</label>{{ form.first_name }}                                       
+                                    </div>                                    
+                                    {% if form.first_name.errors %}
+                                        {% for error in first_name.errors %}
+                                            <div class="alert alert-danger">
+                                                <strong>{{error|escape}}</strong>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                    <div class="col-sm-6">
+                                        <label style="color:brown">Last Name: &nbsp;</label>{{ form.last_name }}                                                                                  
+                                    </div>                                
+                                    {% if form.last_name.errors %}
+                                        {% for error in last_name.errors %}
+                                            <div class="alert alert-danger">
+                                                <strong>{{error|escape}}</strong>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>   
+                                <div class="form-group">
+                                    <label style="color:brown">Email: &nbsp;</label>{{ form.email }}
+                                </div>
+                                {% if form.email.errors %}
+                                    {% for error in email.errors %}
+                                        <div class="alert alert-danger">
+                                            <strong>{{error|escape}}</strong>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label style="color:brown">Password: <span class="text-danger">*</span> {{ form.password1 }}</label>                                          
+                                    </div>                                    
+                                    {% if form.password1.errors %}
+                                        {% for error in password1.errors %}
+                                            <div class="alert alert-danger">
+                                                <strong>{{error|escape}}</strong>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                    <div class="col-sm-6">
+                                        <label style="color:brown">Confirm Password: <span class="text-danger">*</span> {{ form.password2 }}</label>
+                                    </div>                                    
+                                    {% if form.password2.errors %}
+                                        {% for error in password2.errors %}
+                                            <div class="alert alert-danger">
+                                                <strong>{{error|escape}}</strong>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group position-relative">                                        
+                                        <label style="width: 400px">
+                                            {{ form.check }} &nbsp;Whether its Employee Account Creation
+                                        </label>
+                                    </div>                                
+                                        {% if forms.check.errors %}
+                                            {% for error in check.errors %}
+                                                <div class="alert alert-danger">
+                                                    <strong>{{ error|escape }}</strong>
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-facebook btn-user btn-block" id="submit"
+                                        name="submit" value="Register Account" placeholder="Register Account">                                    
+                                </div>                                
+                            </form>
+                            {% endblock %}
+                            <hr>
+                            <div class="text-center">
+                                <a class="small" href="#">Forgot Password?</a>
+                            </div>
+                            <hr>
+                            <div class="text-center">
+                                <a class="medium" href="{% url 'admin_home' %}" style="color: red">Home Page</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+
+</body>
+
+</html>

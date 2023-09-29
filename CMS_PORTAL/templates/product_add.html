@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% include 'base/header.html' %}
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        {% include 'base/sidebar_emp.html' %}
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                {% include 'base/topbar.html' %}
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-4 text-gray-800">Add Products</h1>
+                    <a href="#addproduct">Add Product Column Below</a>
+                    <br />
+                    <div class="row">                        
+                        <div class="col-lg-12">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 id="form_create" class="m-0 font-weight-bold text-primary">Create Product</h6>
+                                </div>
+                                <div class="card-body">
+                                    <p>
+                                       New Products as per your requirements can be added below in the following,
+                                       choose as it fits you.
+                                    </p>
+                                    <p>
+                                        <h4 style="color: chocolate;">Create Product</h4>
+                                    </p>
+                                    <form method="POST" action="{% url 'add_products' %}" style="margin-left: 15px;padding-left: 5px;font-size: 18px;background-color:gainsboro;color: brown;"> {% csrf_token %} 
+                                        <br />                                                                                    
+                                        <p style="display: inline-block;">                                            
+                                            <label style="width: 140px;">Product Name:&nbsp;</label>
+                                            <input type="text" style="width: 220px;" name="product_name" id="product_name">
+                                        </p>
+                                        <p>
+                                            <label style="width: 140px;">Company Name:&nbsp;</label>
+                                            <input type="text" style="width: 220px;" name="company_name" id="company_name">
+                                        </p>
+                                        <p style="display: inline-block;">
+                                            <label style="width: 140px;">Image:&nbsp;</label>
+                                            <input type="file" style="width: 220px;" name="product_image" id="product_image">
+                                        </p>
+                                        <p>
+                                            <label style="width: 140px;">Price:&nbsp;</label>
+                                            <input type="number" min="0" max="99999999" style="width: 220px;" name="product_price" id="product_price" placeholder="0">
+                                        </p>
+                                        <p>
+                                            <label style="width: 340px;">Employee:&nbsp;{{ employee_id }}</label>                                            
+                                        </p>                                        
+                                        <p>                                            
+                                            <input type="submit" style="width: 100px;background-color:thistle;border-radius: 5px;border-color: gainsboro;text-align: center;margin-left: 140px;" name="submit" id="submit" value="Create">
+                                        </p>
+                                    </form>                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 id="addproduct" class="m-0 font-weight-bold text-primary">Add Product</h6>
+                                </div>
+                                <div class="card-body">
+                                    <p>
+                                       Products can be added also from the list given below, choose as it fits you.
+                                    </p>
+                                    {% if otherproducts %}
+                                    <p>
+                                        <h4 style="color: chocolate;">Add Product</h4>
+                                    </p>
+                                    <form method="POST" action="{% url 'product_details' %}" style="margin-left: 15px;padding-left: 5px;font-size: 18px;background-color:gainsboro;color: brown;"> {% csrf_token %} 
+                                        <br />                                                                                  
+                                        <select name="product" size="7">
+                                            {% for item in otherproducts %}
+                                                <option value="{{item.id}}" >Product: {{item.product_name}}</option>                                                
+                                            {% endfor %}
+                                            <p>                                            
+                                                <input type="submit" style="width: 170px;background-color:thistle;border-radius: 5px;border-color: gainsboro;text-align: center; margin-left: 0px;" name="submit" id="submit" value="Add To Your List">
+                                            </p>
+                                        </select>                                                                                                                                                                  
+                                    </form> 
+                                    {% else %}            
+                                        <h6 style="color: chocolate;">No new products are available.</h6>
+                                    {% endif %}                       
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+            {% include 'base/footer.html' %}
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    {% include 'base/footer-logout.html' %}
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+
+</body>
+
+</html>

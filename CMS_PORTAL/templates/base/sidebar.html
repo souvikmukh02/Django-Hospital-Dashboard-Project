@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% block content %}
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'admin_home' %}">
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-laugh-wink"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3">COMPANY CMS PORTAL</div>
+        </a>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item {{ obj0 }}">
+        <a class="nav-link" href="{% url 'admin_home' %}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Admin - Dashboard</span></a>        
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+        <li class="nav-item {{ obj0 }}">
+        <a class="nav-link" href="{% url 'admin_dashboard' %}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Django Admin Dashboard</span></a>
+        </li>
+        
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            SECTIONS
+        </div>
+
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item {{ obj0 }}">
+            <a class="nav-link {{ obj2 }}" href="{% url 'register' %}">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Employee Creation</span>
+            </a>
+            <a class="nav-link {{ obj2 }}" href="{% url 'buttons' %}">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Employee Details</span>
+            </a>
+            <a class="nav-link {{ obj2 }}" href="{% url 'cards' %}">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Specific Employee</span>
+            </a>
+        </li>
+
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <li class="nav-item {{ obj4 }}">
+            <a class="nav-link {{ obj5 }}" href="{% url 'utilities_color' %}">
+                <i class="fas fa-fw fa-wrench"></i>
+                <span>Products Details</span>
+            </a>
+            <a class="nav-link {{ obj5 }}" href="{% url 'utilities_border' %}">
+                <i class="fas fa-fw fa-wrench"></i>
+                <span>Deals Details</span>
+            </a>
+            <a class="nav-link {{ obj5 }}" href="{% url 'visit_details' %}">
+                <i class="fas fa-fw fa-wrench"></i>
+                <span>Doctors Visit Details</span>
+            </a>            
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Login Screens
+        </div>
+        
+        <!-- Nav Item - Pages Collapse Menu -->        
+        <li class="nav-item {{ obj7 }}">                   
+            <a class="nav-link {{ obj18 }}" href="#">
+                <i class="fas fa-fw fa-folder"></i>
+                <span>Welcome {{ request.user }}</span>
+            </a>
+            <a class="nav-link {{ obj19 }}" href="{% url 'my_profile' %}">
+                <i class="fas fa-fw fa-folder"></i>
+                <span>Profile</span>
+            </a>
+            <a class="nav-link {{ obj20 }}" href="{% url 'settings' %}">
+                <i class="fas fa-fw fa-folder"></i>
+                <span>Settings</span>
+            </a>                               
+            <a class="nav-link {{ obj19 }}" href="{% url 'register' %}">
+                <i class="fas fa-fw fa-folder"></i>
+                <span>Register</span>
+            </a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+
+        <!-- Sidebar Message -->
+        <div class="sidebar-card d-none d-lg-flex">
+            <img class="sidebar-card-illustration mb-2" src="{% static 'img/undraw_rocket.svg' %}" alt="...">
+            <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
+        </div>
+
+    </ul>
+    <!-- End of Sidebar -->
+{% endblock %}
+</html>

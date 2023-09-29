@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% include 'base/header.html' %}
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        {% include 'base/sidebar_emp.html' %}
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                {% include 'base/topbar.html' %}
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-4 text-gray-800">View Doctors</h1>                    
+                    <div class="row">
+
+                        <div class="col-lg-12">
+                            <a href="#adddoctor">Add Doctor Column Below</a>
+                            <!-- Product Section 1 -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">List of Doctors</h6>
+                                </div>
+                                <br />
+                                <!-- Page Heading -->                                
+                                <h1 class="h3 mb-2 text-gray-800" style="margin-left: 25px;">Doctors Available</h1>
+                                <p class="mb-4" style="margin-left: 50px;">Doctors lists are given below which includes their name, contact, location, specialization,
+                                <br />
+                                    This page also contains add doctor options.<br />
+                                    <a target="_blank" href="#">Doctor Account Profile Link</a>
+                                </p>
+
+                                <div class="card-body">
+                                    {% include 'tables.html' %}                                     
+                                </div>
+                            </div>
+                        </div>                                                
+                    </div>
+                    <!-- Add Deals column -->                    
+                    <br />
+                    <div class="row">                        
+                        <div class="col-lg-12">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 id="adddoctor" class="m-0 font-weight-bold text-primary">Add Doctors</h6>
+                                </div>
+                                <div class="card-body">
+                                    <p>
+                                       Add Doctor as per your requirements can be added below in the following,
+                                       choose as it fits you.
+                                    </p>
+                                    <p>
+                                        <h4 style="color: chocolate;">Add Doctors</h4>
+                                    </p>
+                                    <form method="POST" action="{% url 'add_doctors' %}" style="margin-left: 15px;padding-left: 5px;font-size: 18px;background-color:gainsboro;color: brown;"> {% csrf_token %}                                        
+                                        <br />                                       
+                                        <p style="display: inline-block;">                                            
+                                            <label style="width: 140px;">Doctor Name:&nbsp;</label>
+                                            <input type="text" style="width: 220px;" name="doctor_name" id="doctor_name">                                            
+                                        </p>                                                        
+                                        <p>
+                                            <label style="width: 140px;">Specialization: &nbsp;</label>
+                                            <select name="specialization" id="specialization">                                                
+                                                <option value="Heart">Heart</option> 
+                                                <option value="Chest">Chest</option> 
+                                                <option value="Liver">Liver</option> 
+                                                <option value="General">General</option> 
+                                                <option value="Orthopaedic">Orthopaedic</option>
+                                                <option value="Other">Other</option> 
+                                            </select>                                        
+                                        </p>                                                                                   
+                                        <p>
+                                            <label style="width: 140px;">Location:&nbsp;</label>
+                                            <input type="text" style="width: 220px;" name="location" id="location">
+                                        </p>                                        
+                                        <p>
+                                            <label style="width: 140px;">Contact:&nbsp;</label>
+                                            <input type="number" min="1000000000" max="9999999999" style="width: 220px;" name="contact" id="contact" placeholder="Enter 10 digit phone no.">
+                                        </p>                                        
+                                        <p>     
+                                            <label style="width: 800px;">Employee:&nbsp;&nbsp;&nbsp;{{ employee_name }}</label>
+                                            <br />
+                                            <input type="submit" style="width: 150px;background-color:thistle;border-radius: 5px;border-color: gainsboro;text-align: center;margin-left: 140px;" name="submit" id="submit" value="Add Doctor">
+                                        </p>
+                                    </form>                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>                        
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+            {% include 'base/footer.html' %}
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    {% include 'base/footer-logout.html' %}
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+
+</body>
+
+</html>
